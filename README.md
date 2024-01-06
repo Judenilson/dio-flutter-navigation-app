@@ -1,6 +1,6 @@
 # dio_flutter_navigation_app
 
-A new Flutter project.
+A new Flutter project, just to learning and to remember some things.
 
 ## Getting Started
 
