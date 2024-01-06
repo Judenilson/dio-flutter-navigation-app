@@ -15,17 +15,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.dosisTextTheme(),
       ),
-      home: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView( // Widget para resolver problema com o teclado quando sobe
-            child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-              child: const LoginPage(),
-            ),
-          ),
-        ),
-      ),
+      home: const LoginPage(),
     );
   }
 }
