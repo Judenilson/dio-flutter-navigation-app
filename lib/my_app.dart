@@ -1,4 +1,3 @@
-// import 'package:dio_flutter_navigation_app/pages/home_page.dart';
 import 'package:dio_flutter_navigation_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +15,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.dosisTextTheme(),
       ),
-      // home: const MyHomePage(title: 'My App'),
-      home: const LoginPage(),
+      home: SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView( // Widget para resolver problema com o teclado quando sobe
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+              child: const LoginPage(),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
