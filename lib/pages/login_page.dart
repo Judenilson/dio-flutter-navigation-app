@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextButton(
                           onPressed: () {
                             if (_emailController.text.trim() ==
-                                    'email@email.com' &&
+                                    'a' &&
                                 _passController.text.trim() == '123') {
                               Navigator.pushReplacement(
                                   context,

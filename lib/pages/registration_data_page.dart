@@ -1,3 +1,4 @@
+import 'package:dio_flutter_navigation_app/pages/repositories/level_repository.dart';
 import 'package:dio_flutter_navigation_app/shared/widgets/input_text_label_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,15 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   final _nameController = TextEditingController(text: '');
   final _birthDateController = TextEditingController(text: '');
   DateTime? _birthDate;
+  var levelRepository = LevelRepository();
+  var levels = [];
+  var levelSelected = '';
+
+  @override
+  void initState() {
+    levels = levelRepository.returnLevels();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +36,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
 
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.black26,
+                backgroundColor: Colors.blue[200],
                 title: const Text('Meus Dados'),
               ),
               body: Padding(
@@ -50,11 +60,31 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                           firstDate: DateTime(1920, 1, 1),
                           lastDate: DateTime(2010, 12, 31),
                         );
-                        if (date != null){
+                        if (date != null) {
                           _birthDateController.text = date.toString();
                           _birthDate = date;
                         }
                       },
+                    ),
+                    const InputTextLabelWidget(text: 'Nível de Experiência'),
+                    Column(
+                      children: levels
+                          .map(
+                            (level) => RadioListTile(
+                              dense: true,
+                              title: Text(level),
+                              selected: levelSelected == level,
+                              value: level,
+                              groupValue: levelSelected,
+                              onChanged: (value) {
+                                debugPrint(value.toString());
+                                setState(() {
+                                  levelSelected = value;
+                                });
+                              },
+                            ),
+                          )
+                          .toList(),
                     ),
                     TextButton(
                       onPressed: () {
