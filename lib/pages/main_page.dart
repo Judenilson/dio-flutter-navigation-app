@@ -31,6 +31,7 @@ class _MainPageState extends State<MainPage> {
                     width: double.infinity,
                     child: const Text('Dados Cadastrais')),
                 onTap: () {
+                  Navigator.pop(context); // remove o menu lateral para não atrapalhar quando voltar p MainPage
                   Navigator.push(
                       context,
                       MaterialPageRoute(
