@@ -23,6 +23,8 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   double _milesFlying = 200.0;
   int _expTime = 0;
 
+  bool saving = false;
+
   @override
   void initState() {
     _levels = _levelRepository.returnLevels();
@@ -52,148 +54,169 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: ListView(
-          // O ListView resolve o erro da tela com conteúdo extenso
-          children: [
-            const InputTextLabelWidget(text: 'Nome'),
-            TextField(
-              controller: _nameController,
-            ),
-            const InputTextLabelWidget(text: 'Data de Nascimento'),
-            TextField(
-              controller: _birthDateController,
-              readOnly: true,
-              onTap: () async {
-                var date = await showDatePicker(
-                  initialDatePickerMode: DatePickerMode.year,
-                  context: context,
-                  initialDate: DateTime(2010, 1, 1),
-                  firstDate: DateTime(1920, 1, 1),
-                  lastDate: DateTime(2010, 12, 31),
-                );
-                if (date != null) {
-                  _birthDateController.text =
-                      '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
-                  _birthDate = date;
-                }
-              },
-            ),
-            const InputTextLabelWidget(text: 'Nível de Experiência'),
-            Column(
-              children: _levels
-                  .map(
-                    (level) => RadioListTile(
-                      dense: true,
-                      title: Text(level),
-                      selected: _levelSelected == level,
-                      value: level,
-                      groupValue: _levelSelected,
-                      onChanged: (value) {
-                        debugPrint(value.toString());
-                        setState(() {
-                          _levelSelected = value;
-                        });
-                      },
-                    ),
-                  )
-                  .toList(),
-            ),
-            const InputTextLabelWidget(text: 'Aeronaves Preferidas'),
-            Column(
-              children: _airplanes
-                  .map(
-                    (airplane) => CheckboxListTile(
-                      title: Text(airplane),
-                      value: _airplaneSelected.contains(airplane),
-                      onChanged: (bool? value) {
-                        setState(() {
-                          if (value!) {
-                            _airplaneSelected.add(airplane);
-                          } else {
-                            _airplaneSelected.remove(airplane);
-                          }
-                        });
-                      },
-                    ),
-                  )
-                  .toList(),
-            ),
-            const InputTextLabelWidget(text: 'Tempo de Experiência'),
-            DropdownButton(
-              value: _expTime,
-              isExpanded: true,
-              items: returnItems(50),
-              onChanged: (value) {
-                setState(() {
-                  _expTime = int.parse(value.toString());
-                });
-              },
-            ),
-            InputTextLabelWidget(
-                text:
-                    'Milhas geralmente voadas por voo ${_milesFlying.round()}NM'),
-            Slider(
-              min: 0,
-              max: 3000,
-              value: _milesFlying,
-              onChanged: (value) {
-                setState(() {
-                  _milesFlying = value.truncateToDouble();
-                });
-              },
-            ),
-            TextButton(
-              onPressed: () {
-                if (_nameController.text.trim().length < 3) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('O nome deve ser preenchido')));
-                  return;
-                }
-                if (_birthDate == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Data de nascimento inválida')));
-                  return;
-                }
-                if (_levelSelected.trim() == '') {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('O nível deve ser selecionado')));
-                  return;
-                }
-                if (_airplaneSelected.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Deve ser selecionado ao menos um avião')));
-                  return;
-                }
-                if (_expTime == 0) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content:
-                          Text('Deve ter ao menos um ano de experiência')));
-                  return;
-                }
-                if (_milesFlying == 0) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content:
-                          Text('Deve gostar de voar alguma quantidade de milhas')));
-                  return;
-                }
+        child: saving
+            ? const Center(child: CircularProgressIndicator())
+            : ListView(
+                // O ListView resolve o erro da tela com conteúdo extenso
+                children: [
+                  const InputTextLabelWidget(text: 'Nome'),
+                  TextField(
+                    controller: _nameController,
+                  ),
+                  const InputTextLabelWidget(text: 'Data de Nascimento'),
+                  TextField(
+                    controller: _birthDateController,
+                    readOnly: true,
+                    onTap: () async {
+                      var date = await showDatePicker(
+                        initialDatePickerMode: DatePickerMode.year,
+                        context: context,
+                        initialDate: DateTime(2010, 1, 1),
+                        firstDate: DateTime(1920, 1, 1),
+                        lastDate: DateTime(2010, 12, 31),
+                      );
+                      if (date != null) {
+                        _birthDateController.text =
+                            '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
+                        _birthDate = date;
+                      }
+                    },
+                  ),
+                  const InputTextLabelWidget(text: 'Nível de Experiência'),
+                  Column(
+                    children: _levels
+                        .map(
+                          (level) => RadioListTile(
+                            dense: true,
+                            title: Text(level),
+                            selected: _levelSelected == level,
+                            value: level,
+                            groupValue: _levelSelected,
+                            onChanged: (value) {
+                              debugPrint(value.toString());
+                              setState(() {
+                                _levelSelected = value;
+                              });
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const InputTextLabelWidget(text: 'Aeronaves Preferidas'),
+                  Column(
+                    children: _airplanes
+                        .map(
+                          (airplane) => CheckboxListTile(
+                            title: Text(airplane),
+                            value: _airplaneSelected.contains(airplane),
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value!) {
+                                  _airplaneSelected.add(airplane);
+                                } else {
+                                  _airplaneSelected.remove(airplane);
+                                }
+                              });
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const InputTextLabelWidget(text: 'Tempo de Experiência'),
+                  DropdownButton(
+                    value: _expTime,
+                    isExpanded: true,
+                    items: returnItems(50),
+                    onChanged: (value) {
+                      setState(() {
+                        _expTime = int.parse(value.toString());
+                      });
+                    },
+                  ),
+                  InputTextLabelWidget(
+                      text:
+                          'Milhas geralmente voadas por voo ${_milesFlying.round()}NM'),
+                  Slider(
+                    min: 0,
+                    max: 3000,
+                    value: _milesFlying,
+                    onChanged: (value) {
+                      setState(() {
+                        _milesFlying = value.truncateToDouble();
+                      });
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        saving = false;
+                      });
+                      if (_nameController.text.trim().length < 3) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('O nome deve ser preenchido')));
+                        return;
+                      }
+                      if (_birthDate == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Data de nascimento inválida')));
+                        return;
+                      }
+                      if (_levelSelected.trim() == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('O nível deve ser selecionado')));
+                        return;
+                      }
+                      if (_airplaneSelected.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'Deve ser selecionado ao menos um avião')));
+                        return;
+                      }
+                      if (_expTime == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'Deve ter ao menos um ano de experiência')));
+                        return;
+                      }
+                      if (_milesFlying == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                'Deve gostar de voar alguma quantidade de milhas')));
+                        return;
+                      }
 
-                setState(() {
-                  
-                });
+                      setState(() {
+                        saving = true;
+                      });
+                      // Aplicando um delay para simular o salvamento dos dados
+                      Future.delayed(const Duration(seconds: 2), () {                        
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                'Dados salvos com sucesso!')));
+                        setState(() {
+                          saving = false;
+                        });
+                        Navigator.pop(context);
+                      });
 
-                debugPrint(_nameController.text);
-                debugPrint(_birthDate.toString());
-                debugPrint(_airplaneSelected.toString());
-                debugPrint(_expTime.toString());
-                debugPrint(_milesFlying.toString());
-                debugPrint('Dados salvos com sucesso!');
-              },
-              child: const Text(
-                'Salvar',
+                      debugPrint(_nameController.text);
+                      debugPrint(_birthDate.toString());
+                      debugPrint(_airplaneSelected.toString());
+                      debugPrint(_expTime.toString());
+                      debugPrint(_milesFlying.toString());
+                      debugPrint('Dados salvos com sucesso!');
+                    },
+                    child: const Text(
+                      'Salvar',
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
