@@ -1,3 +1,4 @@
+import 'package:dio_flutter_navigation_app/pages/login_page.dart';
 import 'package:dio_flutter_navigation_app/pages/registration_data_page.dart';
 import 'package:flutter/material.dart';
 
@@ -172,6 +173,50 @@ class CustomDrawerWidget extends StatelessWidget {
                   ],
                 )),
             onTap: () {},
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            child: Container(
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    Icon(Icons.exit_to_app),
+                    Text('Sair'),
+                  ],
+                )),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext bc) {
+                    return AlertDialog(
+                      title: const Text('VASP Virtual - CEOP'),
+                      content: const Wrap(
+                        children: [
+                          Text('Deseja sair realmente?'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Não')),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()));
+                            },
+                            child: const Text('Sim')),
+                      ],
+                    );
+                  });
+            },
           ),
         ],
       ),
