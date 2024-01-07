@@ -49,7 +49,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[200],
+        // backgroundColor: Colors.blue[200],
         title: const Text('Meus Dados'),
       ),
       body: Padding(
