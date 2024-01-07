@@ -14,19 +14,33 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   final _nameController = TextEditingController(text: '');
   final _birthDateController = TextEditingController(text: '');
   DateTime? _birthDate;
-  var levelRepository = LevelRepository();
-  var airplaneRepository = AirplaneRepository();
-  var airplanes = [];
-  var airplaneSelected = [];
-  var levels = [];
-  var levelSelected = '';
-  double milesFlying = 200.0;
+  final _levelRepository = LevelRepository();
+  final _airplaneRepository = AirplaneRepository();
+  var _airplanes = [];
+  var _airplaneSelected = [];
+  var _levels = [];
+  var _levelSelected = '';
+  double _milesFlying = 200.0;
+  int _expTime = 0;
 
   @override
   void initState() {
-    levels = levelRepository.returnLevels();
-    airplanes = airplaneRepository.returnAirplanes();
+    _levels = _levelRepository.returnLevels();
+    _airplanes = _airplaneRepository.returnAirplanes();
     super.initState();
+  }
+
+  List<DropdownMenuItem<int>> returnItems(int maxQtd) {
+    var items = <DropdownMenuItem<int>>[];
+    for (var i = 0; i <= maxQtd; i++) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i.toString()),
+        ),
+      );
+    }
+    return items;
   }
 
   @override
@@ -64,18 +78,18 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
             ),
             const InputTextLabelWidget(text: 'Nível de Experiência'),
             Column(
-              children: levels
+              children: _levels
                   .map(
                     (level) => RadioListTile(
                       dense: true,
                       title: Text(level),
-                      selected: levelSelected == level,
+                      selected: _levelSelected == level,
                       value: level,
-                      groupValue: levelSelected,
+                      groupValue: _levelSelected,
                       onChanged: (value) {
                         debugPrint(value.toString());
                         setState(() {
-                          levelSelected = value;
+                          _levelSelected = value;
                         });
                       },
                     ),
@@ -84,17 +98,17 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
             ),
             const InputTextLabelWidget(text: 'Aeronaves Preferidas'),
             Column(
-              children: airplanes
+              children: _airplanes
                   .map(
                     (airplane) => CheckboxListTile(
                       title: Text(airplane),
-                      value: airplaneSelected.contains(airplane),
+                      value: _airplaneSelected.contains(airplane),
                       onChanged: (bool? value) {
                         setState(() {
                           if (value!) {
-                            airplaneSelected.add(airplane);
+                            _airplaneSelected.add(airplane);
                           } else {
-                            airplaneSelected.remove(airplane);
+                            _airplaneSelected.remove(airplane);
                           }
                         });
                       },
@@ -102,15 +116,27 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                   )
                   .toList(),
             ),
-            InputTextLabelWidget(
-                text: 'Milhas geralmente voadas por voo ${milesFlying.round()}NM'),
-            Slider(
-              min: 0,
-              max: 5000,
-              value: milesFlying,
+            const InputTextLabelWidget(text: 'Tempo de Experiência'),
+            DropdownButton(
+              value: _expTime,
+              isExpanded: true,
+              items: returnItems(50),
               onChanged: (value) {
                 setState(() {
-                  milesFlying = value;
+                  _expTime = int.parse(value.toString());
+                });
+              },
+            ),
+            InputTextLabelWidget(
+                text:
+                    'Milhas geralmente voadas por voo ${_milesFlying.round()}NM'),
+            Slider(
+              min: 0,
+              max: 3000,
+              value: _milesFlying,
+              onChanged: (value) {
+                setState(() {
+                  _milesFlying = value.truncateToDouble();
                 });
               },
             ),
@@ -118,6 +144,9 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
               onPressed: () {
                 debugPrint(_nameController.text);
                 debugPrint(_birthDate.toString());
+                debugPrint(_airplaneSelected.toString());
+                debugPrint(_expTime.toString());
+                debugPrint(_milesFlying.toString());
               },
               child: const Text(
                 'Salvar',
