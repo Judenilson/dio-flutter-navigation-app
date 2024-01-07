@@ -17,9 +17,10 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   var levelRepository = LevelRepository();
   var airplaneRepository = AirplaneRepository();
   var airplanes = [];
+  var airplaneSelected = [];
   var levels = [];
   var levelSelected = '';
-  var airplaneSelected = [];
+  double milesFlying = 200.0;
 
   @override
   void initState() {
@@ -100,6 +101,18 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                     ),
                   )
                   .toList(),
+            ),
+            InputTextLabelWidget(
+                text: 'Milhas geralmente voadas por voo ${milesFlying.round()}NM'),
+            Slider(
+              min: 0,
+              max: 5000,
+              value: milesFlying,
+              onChanged: (value) {
+                setState(() {
+                  milesFlying = value;
+                });
+              },
             ),
             TextButton(
               onPressed: () {
