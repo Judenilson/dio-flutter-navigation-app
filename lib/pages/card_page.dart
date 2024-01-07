@@ -23,27 +23,27 @@ class _CardPageState extends State<CardPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://judenilson.com.br/img/avatar.jpg'),
-                          child: null,
-                        ),
-                        Text(
-                          'Meu card',
+                  const Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://judenilson.com.br/img/avatar.jpg'),
+                        child: null,
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Judenilson',
+                          textAlign: TextAlign.end,
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w700,                            
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const Text(
-                    'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
+                    'Is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
                     's standard dummy text ever since the 1500s, when an unknown '
                     'printer took a galley of type and scrambled it to make a type specimen book. It has survived '
                     'not only five centuries, but also the leap into electronic typesetting, remaining essentially '
