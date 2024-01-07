@@ -1,7 +1,7 @@
 import 'package:dio_flutter_navigation_app/pages/page_one_page.dart';
 import 'package:dio_flutter_navigation_app/pages/page_three_page.dart';
 import 'package:dio_flutter_navigation_app/pages/page_two_page.dart';
-import 'package:dio_flutter_navigation_app/pages/registration_data_page.dart';
+import 'package:dio_flutter_navigation_app/shared/widgets/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,45 +19,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Main Page')),
-      drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Container(
-                    padding: const EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: const Text('Dados Cadastrais')),
-                onTap: () {
-                  Navigator.pop(context); // remove o menu lateral para não atrapalhar quando voltar p MainPage
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegistrationDataPage()));
-                },
-              ),
-              const Divider(),
-              InkWell(
-                child: Container(
-                    padding: const EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: const Text('Termos de uso e privacidade')),
-                onTap: () {},
-              ),
-              const Divider(),
-              InkWell(
-                child: Container(
-                    padding: const EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: const Text('Configurações')),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const CustomDrawerWidget(),
       body: Column(
         children: [
           Expanded(
