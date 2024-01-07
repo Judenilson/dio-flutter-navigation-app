@@ -1,4 +1,4 @@
-import 'package:dio_flutter_navigation_app/pages/page_one_page.dart';
+import 'package:dio_flutter_navigation_app/pages/card_page.dart';
 import 'package:dio_flutter_navigation_app/pages/page_three_page.dart';
 import 'package:dio_flutter_navigation_app/pages/page_two_page.dart';
 import 'package:dio_flutter_navigation_app/shared/widgets/custom_drawer_widget.dart';
@@ -18,7 +18,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Main Page')),
+      appBar: AppBar(title: const Text('VASP Virtual - CEOP')),
       drawer: const CustomDrawerWidget(),
       body: Column(
         children: [
@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
               },
               scrollDirection: Axis.horizontal,
               children: const [
-                PageOnePage(),
+                CardPage(),
                 PageTwoPage(),
                 PageThreePage(),
               ],
