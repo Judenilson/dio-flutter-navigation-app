@@ -65,13 +65,14 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
               readOnly: true,
               onTap: () async {
                 var date = await showDatePicker(
+                  initialDatePickerMode: DatePickerMode.year,
                   context: context,
                   initialDate: DateTime(2010, 1, 1),
                   firstDate: DateTime(1920, 1, 1),
                   lastDate: DateTime(2010, 12, 31),
                 );
                 if (date != null) {
-                  _birthDateController.text = date.toString();
+                  _birthDateController.text = '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
                   _birthDate = date;
                 }
               },
