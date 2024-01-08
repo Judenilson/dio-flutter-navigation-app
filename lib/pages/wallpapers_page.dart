@@ -20,7 +20,6 @@ class _WallpapersPageState extends State<WallpapersPage> {
           return Center(
             child: Image.asset(
               ImagesPath.wallpapers[index],
-              height: 160,
             ),
           );
         },
