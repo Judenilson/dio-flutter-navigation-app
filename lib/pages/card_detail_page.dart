@@ -17,7 +17,7 @@ class CardDetailPage extends StatelessWidget {
               tag: cardDetailModel.id,
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: NetworkImage(cardDetailModel.url),
+                backgroundImage: AssetImage(cardDetailModel.url),
                 child: null,
               ),
             ),

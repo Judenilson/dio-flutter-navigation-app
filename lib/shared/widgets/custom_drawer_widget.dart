@@ -48,8 +48,7 @@ class CustomDrawerWidget extends StatelessWidget {
                 ),
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage:
-                    NetworkImage('https://judenilson.com.br/img/avatar.jpg'),
+                backgroundImage: AssetImage('lib/images/user1.jpg'),
                 child: null,
               ),
               accountName: Text('Judenilson'),

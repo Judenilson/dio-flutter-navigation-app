@@ -6,7 +6,7 @@ class CardDetailRepository {
     return CardDetailModel(
         1,
         'Judenilson',
-        'https://judenilson.com.br/img/avatar.jpg',
+        'lib/images/user1.jpg',
         'Is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
             's standard dummy text ever since the 1500s, when an unknown '
             'printer took a galley of type and scrambled it to make a type specimen book. It has survived '

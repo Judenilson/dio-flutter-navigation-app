@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         // Widget para resolver problema com o teclado quando sobe
         body: SingleChildScrollView(
           child: ConstrainedBox(
@@ -41,8 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                         Expanded(flex: 1, child: Container()),
                         Expanded(
                             flex: 4,
-                            child: Image.network(
-                                'https://vaspbr.com.br/assets/images/logo.png')),
+                            child: Image.asset('lib/images/vasp_logotipo.png')),
                         Expanded(flex: 1, child: Container()),
                       ],
                     ),
@@ -128,8 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         child: TextButton(
                           onPressed: () {
-                            if (_emailController.text.trim() ==
-                                    'a' &&
+                            if (_emailController.text.trim() == 'a' &&
                                 _passController.text.trim() == '123') {
                               Navigator.pushReplacement(
                                   context,

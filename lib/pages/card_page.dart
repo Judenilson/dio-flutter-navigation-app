@@ -58,7 +58,7 @@ class _CardPageState extends State<CardPage> {
                                   tag: cardDetailModel!.id,
                                   child: CircleAvatar(
                                     backgroundImage:
-                                        NetworkImage(cardDetailModel!.url),
+                                        AssetImage(cardDetailModel!.url),
                                     child: null,
                                   )),
                               Expanded(
