@@ -1,6 +1,6 @@
 import 'package:dio_flutter_navigation_app/pages/card_page.dart';
 import 'package:dio_flutter_navigation_app/pages/page_three_page.dart';
-import 'package:dio_flutter_navigation_app/pages/page_two_page.dart';
+import 'package:dio_flutter_navigation_app/pages/wallpapers_page.dart';
 import 'package:dio_flutter_navigation_app/shared/widgets/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
               scrollDirection: Axis.horizontal,
               children: const [
                 CardPage(),
-                PageTwoPage(),
+                WallpapersPage(),
                 PageThreePage(),
               ],
             ),
