@@ -9,8 +9,6 @@ class WallpapersPage extends StatefulWidget {
 }
 
 class _WallpapersPageState extends State<WallpapersPage> {
-  int count = 0;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
