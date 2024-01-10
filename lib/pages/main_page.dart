@@ -1,5 +1,6 @@
 import 'package:dio_flutter_navigation_app/pages/card_page.dart';
-import 'package:dio_flutter_navigation_app/pages/page_three_page.dart';
+import 'package:dio_flutter_navigation_app/pages/list_view_h_page.dart';
+import 'package:dio_flutter_navigation_app/pages/list_view_page.dart';
 import 'package:dio_flutter_navigation_app/pages/wallpapers_page.dart';
 import 'package:dio_flutter_navigation_app/shared/widgets/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,27 +35,33 @@ class _MainPageState extends State<MainPage> {
               children: const [
                 CardPage(),
                 WallpapersPage(),
-                PageThreePage(),
+                ListViewPage(),
+                ListViewHPage(),
               ],
             ),
           ),
           BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
               onTap: (value) {
                 _pageController.jumpToPage(value);
               },
               currentIndex: _pagePosition,
               items: const [
                 BottomNavigationBarItem(
-                  label: 'Pag1',
+                  label: 'Home',
                   icon: Icon(Icons.home),
                 ),
                 BottomNavigationBarItem(
-                  label: 'Pag2',
-                  icon: Icon(Icons.add),
+                  label: 'Wall',
+                  icon: Icon(Icons.photo),
                 ),
                 BottomNavigationBarItem(
-                  label: 'Pag3',
+                  label: 'Users',
                   icon: Icon(Icons.person),
+                ),
+                BottomNavigationBarItem(
+                  label: 'ListH',
+                  icon: Icon(Icons.list),
                 ),
               ])
         ],
