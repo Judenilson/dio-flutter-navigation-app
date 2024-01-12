@@ -1,6 +1,7 @@
 import 'package:dio_flutter_navigation_app/pages/card_page.dart';
 import 'package:dio_flutter_navigation_app/pages/list_view_h_page.dart';
 import 'package:dio_flutter_navigation_app/pages/list_view_page.dart';
+import 'package:dio_flutter_navigation_app/pages/task_page.dart';
 import 'package:dio_flutter_navigation_app/pages/wallpapers_page.dart';
 import 'package:dio_flutter_navigation_app/shared/widgets/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _MainPageState extends State<MainPage> {
                 WallpapersPage(),
                 ListViewPage(),
                 ListViewHPage(),
+                TaskPage(),
               ],
             ),
           ),
@@ -61,6 +63,10 @@ class _MainPageState extends State<MainPage> {
                 ),
                 BottomNavigationBarItem(
                   label: 'ListH',
+                  icon: Icon(Icons.image),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Tasks',
                   icon: Icon(Icons.list),
                 ),
               ])
