@@ -194,14 +194,16 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                         saving = true;
                       });
                       // Aplicando um delay para simular o salvamento dos dados
-                      Future.delayed(const Duration(seconds: 2), () {                        
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text(
-                                'Dados salvos com sucesso!')));
-                        setState(() {
-                          saving = false;
-                        });
-                        Navigator.pop(context);
+                      Future.delayed(const Duration(seconds: 2), () {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Dados salvos com sucesso!')));
+                          setState(() {
+                            saving = false;
+                          });
+                          Navigator.pop(context);
+                        }
                       });
 
                       debugPrint(_nameController.text);

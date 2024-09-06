@@ -23,7 +23,9 @@ class _CardPageState extends State<CardPage> {
 // Criando um novo método, pois initState não aceita carregamento ASYNC
   void loadData() async {
     cardDetailModel = await cardDetailRepository.get();
-    setState(() {}); // Não aceita ASYNC tb.
+    if (mounted) {
+      setState(() {}); // Não aceita ASYNC tb.
+    }
   }
 
   @override
@@ -81,7 +83,14 @@ class _CardPageState extends State<CardPage> {
                             width: double.infinity,
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CardDetailPage(
+                                            cardDetailModel:
+                                                cardDetailModel!)));
+                              },
                               child: const Text(
                                 'Ler mais...',
                                 style: TextStyle(

@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue)),
+                                  WidgetStateProperty.all(Colors.blue)),
                           child: const Text(
                             'Entrar',
                             style: TextStyle(
